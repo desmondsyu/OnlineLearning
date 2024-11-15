@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: online_learning_app
+    container_name: inventory_manager
     ports:
       - "8000:8000"
     depends_on:
@@ -14,20 +14,20 @@ services:
       - DB_CONNECTION=mysql
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_DATABASE=ol_db
-      - DB_USERNAME=ol_user
-      - DB_PASSWORD=ol_password
+      - DB_DATABASE=inventory_db
+      - DB_USERNAME=custom_user
+      - DB_PASSWORD=custom_password
     volumes:
       - .:/var/www
     command: sh -c "php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"
 
   db:
     image: mysql:8.0
-    container_name: mysql_ol_db
+    container_name: mysql_db
     environment:
-      MYSQL_DATABASE: ol_db
-      MYSQL_USER: ol_user
-      MYSQL_PASSWORD: ol_password
+      MYSQL_DATABASE: inventory_db
+      MYSQL_USER: custom_user
+      MYSQL_PASSWORD: custom_password
       MYSQL_ROOT_PASSWORD: root_password
     ports:
       - "3306:3306"
