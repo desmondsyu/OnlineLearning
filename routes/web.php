@@ -5,6 +5,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,17 +27,18 @@ Route::get('/', function () {
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-Route::get('/register', [AuthenticatedSessionController::class, 'create'])->name('register'); // Example for registration
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 // Protected routes (auth middleware)
 Route::middleware(['auth'])->group(function () {
     // Inventory routes
-    Route::resource('inventory', InventoryController::class);
+    // Route::resource('inventory', InventoryController::class);
 
     // Category routes
-    Route::resource('categories', CategoryController::class);
+    // Route::resource('categories', CategoryController::class);
 
     // Supplier routes
-    Route::resource('suppliers', SupplierController::class);
+    // Route::resource('suppliers', SupplierController::class);
 });
 
