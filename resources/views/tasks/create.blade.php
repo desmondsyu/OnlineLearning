@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('task.store') }}" method="POST">
+    <form action="{{ route('tasks.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="task_title">Task Title:</label>

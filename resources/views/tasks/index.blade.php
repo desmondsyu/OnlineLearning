@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Task List</h1>
-    <a href="{{ route('task.create') }}" class="btn btn-primary">Add New Item</a>
+    <a href="{{ route('tasks.create') }}" class="btn btn-primary">Add New Item</a>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -21,9 +21,9 @@
                 <tr>
                     <td>{{ $item->title }}</td>
                     <td>
-                        <a href="{{ route('task.show', $item->id) }}" class="btn btn-info">View</a>
-                        <a href="{{ route('task.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('task.destroy', $item->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('tasks.show', $item->id) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('tasks.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('tasks.destroy', $item->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>
