@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Module List</h1>
-    <a href="{{ route('module.create') }}" class="btn btn-primary">Add New Item</a>
+    <a href="{{ route('modules.create') }}" class="btn btn-primary">Add New Item</a>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -21,9 +21,9 @@
                 <tr>
                     <td>{{ $item->title }}</td>
                     <td>
-                        <a href="{{ route('module.show', $item->id) }}" class="btn btn-info">View</a>
-                        <a href="{{ route('module.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('module.destroy', $item->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('modules.show', $item->id) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('modules.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('modules.destroy', $item->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>

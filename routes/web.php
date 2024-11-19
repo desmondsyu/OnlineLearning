@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
@@ -32,6 +33,7 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->name('regi
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 Route::resource("/tasks", TaskController::class);
+Route::resource("/modules", ModuleController::class);
 
 // Protected routes (auth middleware)
 Route::middleware(['auth'])->group(function () {

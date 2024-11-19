@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('module.update', $item->id) }}" method="POST">
+    <form action="{{ route('modules.update', $item->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">

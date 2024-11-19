@@ -13,7 +13,7 @@
         </div>
     @endif
 
-    <form action="{{ route('module.store') }}" method="POST">
+    <form action="{{ route('modules.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="module_title">Module Title:</label>
