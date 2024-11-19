@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AnswerController;
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 
@@ -32,18 +32,13 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
-Route::resource("/tasks", TaskController::class);
+Route::resource("/courses", CourseController::class);
 Route::resource("/modules", ModuleController::class);
+Route::resource("/tasks", TaskController::class);
+Route::resource("/answers", AnswerController::class);
 
 // Protected routes (auth middleware)
 Route::middleware(['auth'])->group(function () {
-    // Inventory routes
-    // Route::resource('inventory', InventoryController::class);
-
-    // Category routes
-    // Route::resource('categories', CategoryController::class);
-
-    // Supplier routes
-    // Route::resource('suppliers', SupplierController::class);
+    
 });
 
