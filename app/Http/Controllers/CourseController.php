@@ -2,62 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Services\CourseService;
 
-class CourseController extends Controller
+class AnswerController extends Controller
 {
+    protected $service;
+
+    public function __construct(CourseService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-        $items = [];
-        return view('courses.index', compact('items'));
-    }
-
-    public function create()
-    {
-        return view('courses.create');
-    }
-
-    public function store(Request $request)
-    {
-        return redirect()->route('courses.index')->with('success', 'Course created successfully.');
+        return response()->json($this->service->getAllCourses());
     }
 
     public function show($id)
     {
-//        $item = Inventory::findOrFail($id);
-        $item = Course::find($id);
-        return view('courses.show', compact('item'));
+        return response()->json($this->service->getCourseById($id));
     }
 
-    public function edit($id)
+    public function store(Request $request)
     {
-//        $item = Inventory::findOrFail($id);
-        $item = Course::find($id);
-        return view('courses.edit', compact('item'));
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        return response()->json($this->service->createCourse($data), 201);
     }
 
     public function update(Request $request, $id)
     {
-//        $request->validate([
-//            'product_name' => 'required|string|max:255',
-//            'category' => 'required|string|max:255',
-//            'quantity' => 'required|integer',
-//            'price' => 'required|numeric',
-//        ]);
-//
-//        $item = Inventory::findOrFail($id);
-        $item = Course::find($id);
-        $item->update($request->all());
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        return response()->json($this->service->updateCourse($id, $data));
     }
 
     public function destroy($id)
     {
-//        $item = Inventory::findOrFail($id);
-//        $item->delete();
-        $item = Course::find($id);
-        $item->delete();
-        return redirect()->route('courses.index')->with('success', 'Course deleted successfully.');
+        $this->service->deleteCourse($id);
+        return response()->json(['message' => 'Course deleted successfully.'], 200);
     }
 }
