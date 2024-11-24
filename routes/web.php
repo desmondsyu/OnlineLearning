@@ -20,25 +20,24 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 |
 */
 
-// Default route: custom home page
+// Welcome Page
 Route::get('/', function () {
-    return view('custom_home');
-})->name('home');
+    return view('welcome');
+});
 
-// Authentication routes
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard')->middleware('auth');
 
-Route::resource("/courses", CourseController::class);
-Route::resource("/modules", ModuleController::class);
-Route::resource("/tasks", TaskController::class);
-Route::resource("/answers", AnswerController::class);
+// Route::resource("/courses", CourseController::class);
+// Route::resource("/modules", ModuleController::class);
+// Route::resource("/tasks", TaskController::class);
+// Route::resource("/answers", AnswerController::class);
 
 // Protected routes (auth middleware)
 Route::middleware(['auth'])->group(function () {
     
 });
 
+// Authentication routes
+require __DIR__ . '/auth.php';

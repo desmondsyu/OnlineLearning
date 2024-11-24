@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
+            $table->text('content');
+            $table->decimal('mark', 5, 2)->nullable();
+            $table->unsignedBigInteger('task_id');
+            $table->unsignedBigInteger('student_id');
             $table->timestamps();
+
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
