@@ -29,11 +29,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard')->middleware('auth');
 
-// Route::resource("/courses", CourseController::class);
-// Route::resource("/modules", ModuleController::class);
-// Route::resource("/tasks", TaskController::class);
-// Route::resource("/answers", AnswerController::class);
-
 // Protected routes (auth middleware)
 Route::middleware(['auth'])->group(function () {
     

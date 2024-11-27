@@ -10,29 +10,37 @@
         </div>
     @endif
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Tutor</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($items as $item)
-                <tr>
-                    <td>{{ $item->name }}</td>
-                    <td>{{ $item->tutor}}</td>
-                    <td>
-                        <a href="{{ route('course.show', $item->id) }}" class="btn btn-info">View</a>
-                        <a href="{{ route('course.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('course.destroy', $item->id) }}" method="POST" style="display:inline;">
+    @if()
+        <div>
+            <a href="">Create Course</a>
+        <div>
+    @endif
+
+    <ul class="space-y-4">
+        @foreach ($items as $item)
+            <li>
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div class="px-6 py-4">
+                        <div class="font-bold text-xl mb-2">{{ $item->name }}</div>
+                        <p class="text-gray-700 text-base">{{ $item->description }}</p>
+                        <p class="text-gray-700 text-base"><strong>Tutor:</strong> {{ $item->tutor }}</p>
+                    </div>
+                    <div class="px-6 py-4 bg-gray-100 flex justify-between items-center">
+                        <a href="{{ route('course.show', $item->id) }}"
+                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Join</a>
+                            <a href="{{ route('course.show', $item->id) }}"
+                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">View</a>
+                        <a href="{{ route('course.edit', $item->id) }}"
+                            class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Edit</a>
+                        <form action="{{ route('course.destroy', $item->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit"
+                                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Delete</button>
                         </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </div>
+                </div>
+            </li>
+        @endforeach
+    </ul>
 @endsection

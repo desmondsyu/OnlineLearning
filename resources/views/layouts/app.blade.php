@@ -5,52 +5,36 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>Online Learning</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        <nav class="bg-gray-800 p-4">
-            <div class="container mx-auto flex justify-between items-center">
-                <div class="text-white font-bold text-xl">Online Learning</div>
-                <ul class="flex space-x-4 text-white">
-                    @auth
-                        <li><a href="" class="hover:text-gray-400">My Courses</a></li>
-                        <li><a href="" class="hover:text-gray-400">Explore</a></li>
+<body class="antialiased">
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-white font-bold text-xl">Online Learning</div>
+            <ul class="flex space-x-4">
+                @auth
+                    <li><a href="" class="hover:text-gray-400 text-white">My Courses</a></li>
+                    <li><a href="" class="hover:text-gray-400 text-white">Explore</a></li>
+                    <li>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
-                            <button type="submit" class="hover:underline">Logout</button>
+                            <button type="submit" class="hover:underline text-white">Logout</button>
                         </form>
-                    @else
-                        <li><a href="{{ route('login') }}" class="hover:text-gray-400">Login</a></li>
-                        <li><a href="{{ route('register') }}" class="hover:text-gray-400">Register</a></li>
-                    @endauth
-                </ul>
-            </div>
-        </nav>
+                    </li>
+                @else
+                    <li><a href="{{ route('login') }}" class="hover:text-gray-400 text-white">Login</a></li>
+                    <li><a href="{{ route('register') }}" class="hover:text-gray-400 text-white">Register</a></li>
+                @endauth
+            </ul>
+        </div>
+    </nav>
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <!-- Page Content -->
-        <main>
-            @yield('content')
-        </main>
-    </div>
+    <!-- Page Content -->
+    <main class="container mx-auto mt-4">
+        @yield('content')
+    </main>
 </body>
 
 </html>
