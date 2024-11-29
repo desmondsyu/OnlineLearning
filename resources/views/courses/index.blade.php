@@ -14,7 +14,7 @@
     </form>
 
     <ul class="space-y-4">
-        @if (true)
+        @if (auth()->user()->role === 'tutor')
             <li>
                 <div
                     class="bg-white rounded-lg overflow-hidden border-dashed border-green-500 border-2 flex justify-center">
@@ -26,24 +26,38 @@
         @if (count($courses) > 0)
             @foreach ($courses as $course)
                 <li>
-                    <div class="bg-white rounded-lg overflow-hidden border-2 border-gray-300">
+                    <div class="bg-white rounded-lg overflow-hidden border-2 border-l-8 border-gray-300">
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">{{ $course->title }}</div>
                             <p class="text-gray-700 text-base">{{ $course->description }}</p>
                             <p class="text-gray-700 text-base"><strong>Tutor:</strong> {{ $course->tutor->name }}</p>
                         </div>
+
                         <div class="px-6 py-2 bg-gray-100 flex justify-end items-center gap-x-3">
-                            <a href="" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">Add to My Courses</a>
+                            @if (auth()->user()->role === 'student')
+                                @if (Auth::user()->courses->contains($course->id))
+                                    <span class="text-green-500 font-bold">Already Enrolled</span>
+                                @else
+                                    <form action="{{ route('courses.enroll', $course->id) }}" method="POST">
+                                        @csrf
+                                        <button type="submit"
+                                            class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-700">Enroll</button>
+                                    </form>
+                                @endif
+                            @endif
                             <a href="{{ route('modules.index', $course->id) }}"
                                 class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">View</a>
-                            <a href="{{ route('courses.edit', $course->id) }}"
-                                class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-700">Edit</a>
-                            <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-700">Delete</button>
-                            </form>
+
+                            @if (auth()->user()->role === 'tutor')
+                                <a href="{{ route('courses.edit', $course->id) }}"
+                                    class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-700">Edit</a>
+                                <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-700">Delete</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </li>

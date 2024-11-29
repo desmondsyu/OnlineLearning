@@ -26,7 +26,7 @@
                 @auth
                     @if (auth()->user()->role === 'tutor')
                         <li>
-                            <a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">Courses Management</a>
+                            <a href="{{ route('courses.management') }}" class="hover:text-gray-400 text-white">Courses Management</a>
                         </li>
                     @endif
                     @if (auth()->user()->role === 'student')

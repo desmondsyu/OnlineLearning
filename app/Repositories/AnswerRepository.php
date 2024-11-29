@@ -11,6 +11,11 @@ class AnswerRepository
         return Answer::all();
     }
 
+    public function findByTask($task_id)
+    {
+        return Answer::where('task_id', $task_id)->get();
+    }
+
     public function find($id)
     {
         return Answer::findOrFail($id);

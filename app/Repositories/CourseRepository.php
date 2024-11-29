@@ -16,6 +16,17 @@ class CourseRepository
         return Course::where('title', 'like', '%' . $query . '%')->get();
     }
 
+    public function searchFromTutor($query, $tutor_id)
+    {
+        $queryBuilder = Course::where('tutor_id', $tutor_id);
+
+        if (!empty($query)) {
+            $queryBuilder->where('title', 'like', '%' . $query . '%');
+        }
+
+        return $queryBuilder->get();
+    }
+
     public function find($id)
     {
         return Course::findOrFail($id);

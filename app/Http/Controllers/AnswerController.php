@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\AnswerService;
+use App\Services\TaskService;
+use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
     protected $service;
+    protected $taskService;
 
-    public function __construct(AnswerService $service)
+    public function __construct(AnswerService $service, TaskService $taskService)
     {
         $this->service = $service;
+        $this->taskService = $taskService;
     }
 
     public function index()
@@ -19,34 +23,54 @@ class AnswerController extends Controller
         return response()->json($this->service->getAllAnswers());
     }
 
-    public function show($id)
+    public function getByTask($task_id)
     {
-        return response()->json($this->service->getAnswerById($id));
+        $answers = $this->service->getAnswerByTask($task_id);
+        $task = $this->taskService->getTaskById($task_id);
+        return view('answers.index', compact('answers', 'task'));
     }
 
-    public function store(Request $request)
+    public function create($task_id)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        return response()->json($this->service->createAnswer($data), 201);
+        return view('answers.create', compact('task_id'));
     }
 
-    public function update(Request $request, $id)
+    public function store(Request $request, $task_id)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+             'content' => 'required|string',
         ]);
 
-        return response()->json($this->service->updateAnswer($id, $data));
+        $data['mark'] = 0;
+        $data['task_id'] = $task_id;
+        $data['student_id'] = Auth::id();
+
+        $this->service->createAnswer($data);
+
+        return redirect()->route('answers.index', $task_id)->with('success', 'Attempt submitted.');
     }
 
-    public function destroy($id)
+    public function edit($id, $task_id)
+    {
+        $answer = $this->service->getAnswerById($id);
+        return view('answers.edit', compact('answer', 'task_id'));
+    }
+
+    public function update(Request $request, $id, $task_id)
+    {
+        $data = $request->validate([
+            'mark' => 'required|numeric|min:0',
+            'content' => 'required|string',
+        ]);
+
+        $this->service->updateAnswer($id, $data);
+
+        return redirect()->route('answers.index', $task_id)->with('success', 'Marked');
+    }
+
+    public function destroy($id, $task_id)
     {
         $this->service->deleteAnswer($id);
-        return response()->json(['message' => 'Answer deleted successfully.'], 200);
+        return redirect()->route('answers.index', $task_id)->with('success', 'Answer deleted');
     }
 }

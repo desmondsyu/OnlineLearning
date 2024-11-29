@@ -18,6 +18,10 @@ class AnswerService
         return $this->repository->all();
     }
 
+    public function getAnswerByTask($task_id){
+        return $this->repository->findByTask($task_id);
+    }
+
     public function getAnswerById($id)
     {
         return $this->repository->find($id);

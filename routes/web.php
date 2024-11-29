@@ -33,11 +33,15 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/courses/index', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/search', [CourseController::class, 'search'])->name('courses.search');
+    Route::get('/courses/management', [CourseController::class, 'searchFromTutor'])->name('courses.management');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
     Route::post('/courses/store', [CourseController::class, 'store'])->name('courses.store');
     Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
     Route::post('/courses/{id}/update', [CourseController::class, 'update'])->name('courses.update');
     Route::delete('/courses/{id}/delete', [CourseController::class, 'destroy'])->name('courses.destroy');
+
+    Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
+    Route::get('/my-courses', [CourseController::class, 'myCourses'])->name('courses.my');
 
     Route::get('/courses/{course_id}/modules/index', [ModuleController::class, 'getByCourse'])->name('modules.index');
     Route::get('/courses/{course_id}/modules/create', [ModuleController::class, 'create'])->name('modules.create');
@@ -53,11 +57,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/modules/{module_id}/tasks/{id}/update', [TaskController::class, 'update'])->name('tasks.update');
     Route::delete('/modules/{module_id}/tasks/{id}/delete', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
-    Route::get('/tasks/{task_id}/answer/index', [AnswerController::class, 'getByTask'])->name('answer.index');
-    Route::get('/tasks/{task_id}/answer/create', [AnswerController::class, 'create'])->name('answer.create');
-    Route::post('/tasks/{task_id}/answer/store', [AnswerController::class, 'create'])->name('answer.store');
-    Route::get('/tasks/{task_id}/answer/view', [AnswerController::class, 'create'])->name('answer.view');
-    Route::post('/tasks/{task_id}/answer/grade', [AnswerController::class, 'create'])->name('answer.grade');
+    Route::get('/tasks/{task_id}/answer/index', [AnswerController::class, 'getByTask'])->name('answers.index');
+    Route::get('/tasks/{task_id}/answer/create', [AnswerController::class, 'create'])->name('answers.create');
+    Route::post('/tasks/{task_id}/answer/store', [AnswerController::class, 'store'])->name('answers.store');
+    Route::get('/tasks/{task_id}/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answers.edit');
+    Route::post('/tasks/{task_id}/answer/{id}/update', [AnswerController::class, 'update'])->name('answers.update');
+
 });
 
 // Authentication routes
