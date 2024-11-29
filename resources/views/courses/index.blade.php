@@ -1,46 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Course List</h1>
-    <a href="{{ route('course.create') }}" class="btn btn-primary">Add New Item</a>
-
     @if (session('success'))
-        <div class="alert alert-success">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
             {{ session('success') }}
         </div>
     @endif
 
-    @if()
-        <div>
-            <a href="">Create Course</a>
-        <div>
-    @endif
+    <form method="GET" action="{{ route('courses.search') }}" class="mb-6">
+        <input type="text" name="query" placeholder="Search courses..." class="border rounded px-4 py-2 w-full sm:w-1/2"
+            value="{{ request('query') }}" />
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
+    </form>
 
     <ul class="space-y-4">
-        @foreach ($items as $item)
+        @if (true)
             <li>
-                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                    <div class="px-6 py-4">
-                        <div class="font-bold text-xl mb-2">{{ $item->name }}</div>
-                        <p class="text-gray-700 text-base">{{ $item->description }}</p>
-                        <p class="text-gray-700 text-base"><strong>Tutor:</strong> {{ $item->tutor }}</p>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-100 flex justify-between items-center">
-                        <a href="{{ route('course.show', $item->id) }}"
-                            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Join</a>
-                            <a href="{{ route('course.show', $item->id) }}"
-                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">View</a>
-                        <a href="{{ route('course.edit', $item->id) }}"
-                            class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-700">Edit</a>
-                        <form action="{{ route('course.destroy', $item->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700">Delete</button>
-                        </form>
-                    </div>
+                <div
+                    class="bg-white rounded-lg overflow-hidden border-dashed border-green-500 border-2 flex justify-center">
+                    <a href="{{ route('courses.create') }}" class="font-bold text-xl mx-auto my-4">Create Course</a>
                 </div>
             </li>
-        @endforeach
+        @endif
+
+        @if (count($courses) > 0)
+            @foreach ($courses as $course)
+                <li>
+                    <div class="bg-white rounded-lg overflow-hidden border-2 border-gray-300">
+                        <div class="px-6 py-4">
+                            <div class="font-bold text-xl mb-2">{{ $course->title }}</div>
+                            <p class="text-gray-700 text-base">{{ $course->description }}</p>
+                            <p class="text-gray-700 text-base"><strong>Tutor:</strong> {{ $course->tutor->name }}</p>
+                        </div>
+                        <div class="px-6 py-2 bg-gray-100 flex justify-end items-center gap-x-3">
+                            <a href="" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">Add to My Courses</a>
+                            <a href="{{ route('modules.index', $course->id) }}"
+                                class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">View</a>
+                            <a href="{{ route('courses.edit', $course->id) }}"
+                                class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-700">Edit</a>
+                            <form action="{{ route('courses.destroy', $course->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-700">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        @else
+            <li class="text-gray-700">No courses found.</li>
+        @endif
     </ul>
 @endsection

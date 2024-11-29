@@ -15,8 +15,8 @@
             <div class="text-white font-bold text-xl">Online Learning</div>
             <ul class="flex space-x-4">
                 @auth
-                    <li><a href="" class="hover:text-gray-400 text-white">My Courses</a></li>
-                    <li><a href="" class="hover:text-gray-400 text-white">Explore</a></li>
+                    <li><a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">My Courses</a></li>
+                    <li><a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">Explore</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf

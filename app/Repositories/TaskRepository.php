@@ -11,6 +11,10 @@ class TaskRepository
         return Task::all();
     }
 
+    public function findByModule($module_id){
+        return Task::where('module_id', $module_id)->get();
+    }
+
     public function find($id)
     {
         return Task::findOrFail($id);

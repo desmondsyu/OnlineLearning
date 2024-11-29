@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CourseService;
+use Illuminate\Support\Facades\Auth;
 
-class AnswerController extends Controller
+class CourseController extends Controller
 {
     protected $service;
 
@@ -16,37 +17,54 @@ class AnswerController extends Controller
 
     public function index()
     {
-        return response()->json($this->service->getAllCourses());
+        $courses = $this->service->getAllCourses();
+        return view('courses.index', compact('courses'));
     }
 
-    public function show($id)
+    public function search(Request $request)
     {
-        return response()->json($this->service->getCourseById($id));
+        $query = $request->input('query', '');
+        $courses = $this->service->searchCoursesByName($query);
+        return view('courses.index', compact('courses'));
+    }
+
+    public function create(){
+        return view('courses.create');
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        return response()->json($this->service->createCourse($data), 201);
+        $data['tutor_id'] = Auth::id();
+
+        $this->service->createCourse($data);
+        return redirect()->route('courses.index')->with('success', 'New course created.');
+    }
+
+    public function edit($id){
+        $course = $this->service->getCourseById($id);
+        return view('courses.edit', compact('course'));
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        return response()->json($this->service->updateCourse($id, $data));
+        $this->service->updateCourse($id, $data);
+
+        return redirect()->route('courses.index')->with('success', 'Course information updated.');
     }
 
     public function destroy($id)
     {
         $this->service->deleteCourse($id);
-        return response()->json(['message' => 'Course deleted successfully.'], 200);
+        return redirect()->route('courses.index')->with('success', 'Course deleted!');
     }
 }

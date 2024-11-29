@@ -11,6 +11,11 @@ class CourseRepository
         return Course::all();
     }
 
+    public function searchByName($query)
+    {
+        return Course::where('title', 'like', '%' . $query . '%')->get();
+    }
+
     public function find($id)
     {
         return Course::findOrFail($id);

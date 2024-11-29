@@ -18,6 +18,10 @@ class ModuleService
         return $this->repository->all();
     }
 
+    public function getModuleByCourse($course_id){
+        return $this->repository->findByCourse($course_id);
+    }
+
     public function getModuleById($id)
     {
         return $this->repository->find($id);

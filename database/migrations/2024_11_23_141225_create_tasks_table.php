@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->decimal('total_grade');
             $table->unsignedBigInteger('module_id');
             $table->timestamps();
 
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('restrict');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
         });
     }
 

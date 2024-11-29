@@ -11,6 +11,10 @@ class ModuleRepository
         return Module::all();
     }
 
+    public function findByCourse($course_id){
+        return Module::where('course_id', $course_id)->get();
+    }
+
     public function find($id)
     {
         return Module::findOrFail($id);

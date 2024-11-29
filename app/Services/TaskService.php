@@ -18,6 +18,10 @@ class TaskService
         return $this->repository->all();
     }
 
+    public function getTaskByModule($module_id){
+        return $this->repository->findByModule($module_id);
+    }
+
     public function getTaskById($id)
     {
         return $this->repository->find($id);

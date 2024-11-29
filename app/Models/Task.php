@@ -12,6 +12,7 @@ class Task extends Model
     protected $fillable = [
         'title',
         'description',
+        'total_grade',
         'module_id',
     ];
 

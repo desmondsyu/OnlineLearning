@@ -18,6 +18,11 @@ class CourseService
         return $this->repository->all();
     }
 
+    public function searchCoursesByName($query)
+    {
+        return $this->repository->searchByName($query);
+    }
+
     public function getCourseById($id)
     {
         return $this->repository->find($id);

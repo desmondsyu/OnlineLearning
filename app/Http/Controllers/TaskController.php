@@ -4,50 +4,72 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TaskService;
+use App\Services\ModuleService;
 
-class AnswerController extends Controller
+class TaskController extends Controller
 {
     protected $service;
+    protected $moduleService;
 
-    public function __construct(TaskService $service)
+    public function __construct(TaskService $service, ModuleService $moduleService)
     {
         $this->service = $service;
+        $this->moduleService = $moduleService;
     }
 
     public function index()
     {
-        return response()->json($this->service->getAllTasks());
+        $tasks = $this->service->getAllTasks();
+        return view('tasks.index', compact('tasks'));
     }
 
-    public function show($id)
+    public function getByModule($module_id)
     {
-        return response()->json($this->service->getTaskById($id));
+        $tasks = $this->service->getTaskByModule($module_id);
+        $module = $this->moduleService->getModuleById($module_id);
+        return view('tasks.index', compact('tasks', 'module'));
     }
 
-    public function store(Request $request)
+    public function create($module_id)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-
-        return response()->json($this->service->createTask($data), 201);
+        return view('tasks.create', compact('module_id'));
     }
 
-    public function update(Request $request, $id)
+    public function store(Request $request, $module_id)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'total_grade' => 'required|numeric|min:0',
         ]);
 
-        return response()->json($this->service->updateTask($id, $data));
+        $data['module_id'] = $module_id;
+
+        $this->service->createTask($data);
+
+        return redirect()->route('tasks.index', $module_id)->with('success', 'New task created.');
     }
 
-    public function destroy($id)
+    public function edit($id, $module_id)
+    {
+        $task = $this->service->getTaskById($id);
+        return view('tasks.edit', compact('task', 'module_id'));
+    }
+
+    public function update(Request $request, $id, $module_id)
+    {
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'total_grade' => 'required|numeric|min:0',
+        ]);
+        $this->service->updateTask($id, $data);
+        return redirect()->route('tasks.index', $module_id)->with('success', 'Task information updated.');
+    }
+
+    public function destroy($id, $module_id)
     {
         $this->service->deleteTask($id);
-        return response()->json(['message' => 'Task deleted successfully.'], 200);
+        return redirect()->route('tasks.index', $module_id)->with('success', 'Task deleted!');
     }
 }
-
