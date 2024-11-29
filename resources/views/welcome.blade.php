@@ -39,6 +39,7 @@
         <div class="text-center">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to Online Learning</h1>
             <p class="text-gray-600 mb-8">Easy tracking.</p>
+            <p class="text-gray-600 mb-8">Please register or login.</p>
             @guest
                 <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Login

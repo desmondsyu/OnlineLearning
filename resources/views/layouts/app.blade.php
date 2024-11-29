@@ -12,11 +12,31 @@
 <body class="antialiased">
     <nav class="bg-gray-800 p-4">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-white font-bold text-xl">Online Learning</div>
+            <div class="text-white font-bold text-xl">
+                Online Learning -
+                @if (auth()->user()->role === 'tutor')
+                    Welcome, Tutor!
+                @endif
+                @if (auth()->user()->role === 'student')
+                    Welcome, Student!
+                @endif
+            </div>
+
             <ul class="flex space-x-4">
                 @auth
-                    <li><a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">My Courses</a></li>
-                    <li><a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">Explore</a></li>
+                    @if (auth()->user()->role === 'tutor')
+                        <li>
+                            <a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">Courses Management</a>
+                        </li>
+                    @endif
+                    @if (auth()->user()->role === 'student')
+                        <li>
+                            <a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">My Courses</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('courses.index') }}" class="hover:text-gray-400 text-white">Explore</a>
+                        </li>
+                    @endif
                     <li>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
