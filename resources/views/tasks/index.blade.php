@@ -6,7 +6,7 @@
         <h2 class="text-xl">{{ $module->description }}</h2>
     </div>
     <div class="mx-28 pb-10 mb-10 content-center border-b-2 border-gray-500">
-        <p>{{ $module->content }}</p>
+        <p class="px-20">{{ $module->content }}</p>
     </div>
 
     @if (session('success'))
@@ -32,10 +32,22 @@
                             <div class="font-bold text-xl">{{ $task->title }}</div>
                         </div>
                         <div class="px-6 py-1 bg-gray-100 flex justify-end items-center gap-x-3">
-                            {{-- @if (auth()->user()->role === 'student') --}}
-                            <a href="{{ route('answers.create', $task->id) }}"
-                                class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">Attempt</a>
-                            {{-- @endif --}}
+                            @if (auth()->user()->role === 'student')
+                                @php
+                                    $submission = $task->answers->firstWhere('student_id', auth()->id());
+                                @endphp
+                                @if ($submission)
+                                    <a href="{{ route('answers.edit', [$task->id, $submission->id]) }}"
+                                        class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-700">
+                                        View Submission
+                                    </a>
+                                @else
+                                    <a href="{{ route('answers.create', $task->id) }}"
+                                        class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">
+                                        Attempt
+                                    </a>
+                                @endif
+                            @endif
 
                             @if (auth()->user()->role === 'tutor')
                                 <a href="{{ route('answers.index', $task->id) }}"

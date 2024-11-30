@@ -46,4 +46,12 @@ class CourseService
     {
         return $this->repository->delete($id);
     }
+
+    public function getCourseActivity($courseId, $studentId)
+    {
+        $course = $this->repository->getCourseWithActivity($courseId, $studentId);
+        $student = $this->repository->getStudentById($studentId);
+
+        return compact('course', 'student');
+    }
 }

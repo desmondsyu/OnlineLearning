@@ -40,6 +40,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/courses/{id}/update', [CourseController::class, 'update'])->name('courses.update');
     Route::delete('/courses/{id}/delete', [CourseController::class, 'destroy'])->name('courses.destroy');
 
+    Route::get('/courses/{course}/manage-students', [CourseController::class, 'manageStudents'])->name('courses.students');
+    Route::get('/courses/{course}/students/{student}/complete', [CourseController::class, 'markComplete'])->name('courses.complete');
+    Route::get('/courses/{course}/students/{student}/activity', [CourseController::class, 'showActivity'])->name('courses.activity');
+
     Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
     Route::get('/my-courses', [CourseController::class, 'myCourses'])->name('courses.my');
 
@@ -62,6 +66,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tasks/{task_id}/answer/store', [AnswerController::class, 'store'])->name('answers.store');
     Route::get('/tasks/{task_id}/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answers.edit');
     Route::post('/tasks/{task_id}/answer/{id}/update', [AnswerController::class, 'update'])->name('answers.update');
+
+
 
 });
 

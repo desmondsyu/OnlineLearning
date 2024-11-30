@@ -56,7 +56,7 @@ class CourseController extends Controller
         $data['tutor_id'] = Auth::id();
 
         $this->service->createCourse($data);
-        return redirect()->route('courses.index')->with('success', 'New course created.');
+        return redirect()->route('courses.management')->with('success', 'New course created.');
     }
 
     public function edit($id)
@@ -74,13 +74,13 @@ class CourseController extends Controller
 
         $this->service->updateCourse($id, $data);
 
-        return redirect()->route('courses.index')->with('success', 'Course information updated.');
+        return redirect()->route('courses.management')->with('success', 'Course information updated.');
     }
 
     public function destroy($id)
     {
         $this->service->deleteCourse($id);
-        return redirect()->route('courses.index')->with('success', 'Course deleted!');
+        return redirect()->route('courses.management')->with('success', 'Course deleted!');
     }
 
     public function enroll($courseId)
@@ -93,9 +93,30 @@ class CourseController extends Controller
 
         $user = Auth::user();
         if ($user instanceof \App\Models\User) {
-            $user->courses()->syncWithoutDetaching($courseId);
+            $user->courses()->syncWithoutDetaching([$courseId => ['status' => 'Ongoing']]);
         }
 
         return redirect()->route('courses.index')->with('success', 'Successfully enrolled in the course.');
+    }
+
+    public function manageStudents($courseId)
+    {
+        $course = $this->service->getCourseById($courseId);
+        $students = $course->students()->withPivot('status')->get();
+        return view('students.index', compact('course', 'students'));
+    }
+
+    public function markComplete($courseId, $studentId)
+    {
+        $course = $this->service->getCourseById($courseId);
+        $course->students()->updateExistingPivot($studentId, ['status' => 'Completed']);
+        return redirect()->route('courses.students', $courseId)->with('success', 'Student marked as completed.');
+    }
+
+    public function showActivity($courseId, $studentId)
+    {
+        $data = $this->service->getCourseActivity($courseId, $studentId);
+
+        return view('activities.index', $data);
     }
 }

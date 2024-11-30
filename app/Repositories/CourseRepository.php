@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Course;
+use App\Models\User;
 
 class CourseRepository
 {
@@ -48,5 +49,17 @@ class CourseRepository
     {
         $course = $this->find($id);
         return $course->delete();
+    }
+
+    public function getCourseWithActivity($courseId, $studentId)
+    {
+        return Course::with(['modules.tasks.answers' => function ($query) use ($studentId) {
+            $query->where('student_id', $studentId);
+        }])->findOrFail($courseId);
+    }
+
+    public function getStudentById($studentId)
+    {
+        return User::findOrFail($studentId);
     }
 }

@@ -18,7 +18,7 @@
                     <div class="bg-white overflow-hidden border-2 border-gray-300">
                         <div class="px-6 py-2 justify-between">
                             <div class="font-bold text-xl">{{ $answer->student->name }}</div>
-                            <div class="font-bold text-xl">{{ $answer->mark}}</div>
+                            <div class="font-bold text-xl">{{ $answer->mark }} / {{ $task->total_grade }}</div>
                         </div>
                         <div class="px-6 py-1 bg-gray-100 flex justify-end items-center gap-x-3">
                             @if (auth()->user()->role === 'tutor')

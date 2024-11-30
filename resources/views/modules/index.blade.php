@@ -1,9 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="mb-6 border-b-4 border-gray-500">
-        <h1 class="text-3xl font-bold mb-4">{{ $course->title }}</h1>
-        <h2 class="text-lg mb-2">{{ $course->description }}</h2>
+    <div class="mb-6 border-b-4 border-gray-500 flex-row flex justify-between">
+        <div>
+            <h1 class="text-3xl font-bold mb-4">{{ $course->title }}</h1>
+            <h2 class="text-lg mb-2">{{ $course->description }}</h2>
+        </div>
+        @if (auth()->user()->role === 'tutor')
+            <a href="{{ route('courses.students', $course->id) }}"
+                class="bg-gray-500 text-white px-4 py-1 my-5 rounded hover:bg-gray-700 content-center">Manage
+                Students</a>
+        @endif
+        @if (auth()->user()->role === 'student')
+            <a href="{{ route('courses.activity', [$course->id, Auth::id()]) }}"
+                class="bg-gray-500 text-white px-4 py-1 my-5 rounded hover:bg-gray-700 content-center">Activity</a>
+        @endif
     </div>
 
     @if (session('success'))
