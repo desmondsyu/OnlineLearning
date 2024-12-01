@@ -7,11 +7,10 @@
         </div>
     @endif
 
-    {{-- <form method="GET" action="{{ route('courses.search') }}" class="mb-6">
-        <input type="text" name="query" placeholder="Search courses..." class="border rounded px-4 py-2 w-full sm:w-1/2"
-            value="{{ request('query') }}" />
+    <form method="GET" action="{{ route('courses.filter') }}" class="mb-6">
+        <input type="text" name="query" placeholder="Search courses..." class="border rounded px-4 py-2 w-full sm:w-1/2" value="{{ request('query') }}" />
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
-    </form> --}}
+    </form>
 
     <ul class="space-y-4">
         @if (auth()->user()->role === 'tutor')
@@ -23,6 +22,7 @@
         @endif
 
         @if (count($courses) > 0)
+            
             @foreach ($courses as $course)
                 <li>
                     <div class="bg-white rounded-lg overflow-hidden border-2 border-l-8 border-gray-300">

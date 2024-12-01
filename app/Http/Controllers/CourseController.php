@@ -119,4 +119,12 @@ class CourseController extends Controller
 
         return view('activities.index', $data);
     }
+
+    public function filter(Request $request)
+    {
+        $query = $request->input('query', '');
+        $courses = $this->service->searchCoursesByNameFromAll($query);
+        return view('courses.index', compact('courses'));
+    }
+
 }

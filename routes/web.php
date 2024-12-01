@@ -32,6 +32,7 @@ Route::get('/dashboard', function () {
 // Protected routes (auth middleware)
 Route::middleware(['auth'])->group(function () {
     Route::get('/courses/index', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/filter', [CourseController::class, 'filter'])->name('courses.filter');
     Route::get('/courses/search', [CourseController::class, 'search'])->name('courses.search');
     Route::get('/courses/management', [CourseController::class, 'searchFromTutor'])->name('courses.management');
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
