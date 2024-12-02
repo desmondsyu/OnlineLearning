@@ -23,7 +23,9 @@ return [
     |
     */
 
-    'view' => 'breadcrumbs::tailwind',
+    // 'view' => 'breadcrumbs::tailwind',
+    'view' => 'partials.breadcrumbs', // --> resources/views/partials/breadcrumbs.blade.php
+
 
     /*
     |--------------------------------------------------------------------------
