@@ -1,6 +1,6 @@
 # How to Run
-Clone the project and it's submodules<tr>
-git clone --recurse-submodules https://github.com/desmondsyu/OnlineLearning.git <tr>
+Clone the project and it's submodules<br>
+git clone --recurse-submodules https://github.com/desmondsyu/OnlineLearning.git <br>
 Then deploy the whole project on podman
 
 # Group Members
