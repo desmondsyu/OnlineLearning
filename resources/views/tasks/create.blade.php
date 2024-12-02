@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('tasks.create', $module_id, $course_id) }}
     <h1 class="text-3xl font-bold mb-4">Add New Task</h1>
 
     @if ($errors->any())
@@ -15,7 +16,8 @@
         </div>
     @endif
 
-    <form action="{{ route('tasks.store', $module_id) }}" method="POST" class="w-full max-w-lg">
+    <form action="{{ route('tasks.store', ['module_id' => $module_id, 'course_id' => $course_id]) }}" method="POST"
+        class="w-full max-w-lg">
         @csrf
         <div class="mb-4">
             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Task Name:</label>

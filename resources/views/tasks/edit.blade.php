@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('tasks.edit', $module_id, $task->id, $course_id) }}
     <h1 class="text-3xl font-bold mb-4">Edit Task Information</h1>
 
     @if ($errors->any())
@@ -15,7 +16,8 @@
         </div>
     @endif
 
-    <form action="{{ route('tasks.update', [$task->id, $module_id]) }}" method="POST" class="w-full max-w-lg">
+    <form action="{{ route('tasks.update', ['course_id' => $course_id, 'module_id' => $module_id, 'id' => $task->id]) }}"
+        method="POST" class="w-full max-w-lg">
         @csrf
         <div class="mb-4">
             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Task Name:</label>
@@ -32,7 +34,7 @@
         </div>
 
         <div class="mb-4">
-            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Module Description:</label>
+            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Task Description:</label>
             <textarea type="text" name="description"
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 required>{{ $task->description }}</textarea>

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('tasks.index', $module->id, $module->course_id) }}
     <div class="mb-6 border-b-4 border-gray-500">
         <h1 class="text-3xl font-bold mb-4">{{ $module->title }}</h1>
         <h2 class="text-xl">{{ $module->description }}</h2>
@@ -19,7 +20,8 @@
         @if (auth()->user()->role === 'tutor')
             <li>
                 <div class="bg-white overflow-hidden border-dashed border-gray-500 border-2 flex justify-center">
-                    <a href="{{ route('tasks.create', $module->id) }}" class="font-bold text-xl mx-auto my-2">Create Task</a>
+                    <a href="{{ route('tasks.create', ['course_id' => $module->course_id, 'module_id' => $module->id]) }}"
+                        class="font-bold text-xl mx-auto my-2">Create Task</a>
                 </div>
             </li>
         @endif
@@ -37,12 +39,12 @@
                                     $submission = $task->answers->firstWhere('student_id', auth()->id());
                                 @endphp
                                 @if ($submission)
-                                    <a href="{{ route('answers.edit', [$task->id, $submission->id]) }}"
+                                    <a href="{{ route('answers.edit', ['course_id' => $module->course_id, 'module_id' => $module->id, 'task_id' => $task->id, 'id' => $submission->id]) }}"
                                         class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-700">
                                         View Submission
                                     </a>
                                 @else
-                                    <a href="{{ route('answers.create', $task->id) }}"
+                                    <a href="{{ route('answers.create', ['course_id' => $module->course_id, 'module_id' => $module->id, 'task_id' => $task->id]) }}"
                                         class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">
                                         Attempt
                                     </a>
@@ -50,12 +52,13 @@
                             @endif
 
                             @if (auth()->user()->role === 'tutor')
-                                <a href="{{ route('answers.index', $task->id) }}"
+                                <a href="{{ route('answers.index', ['course_id' => $module->course_id, 'module_id' => $module->id, 'task_id' => $task->id]) }}"
                                     class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-700">Grading</a>
-                                <a href="{{ route('tasks.edit', [$task->id, $module->id]) }}"
+                                <a href="{{ route('tasks.edit', ['course_id' => $module->course_id, 'module_id' => $module->id, 'id' => $task->id]) }}"
                                     class="bg-yellow-500 text-white px-4 py-1 rounded hover:bg-yellow-700">Edit</a>
-                                <form action="{{ route('tasks.destroy', [$task->id, $module->id]) }}" method="POST"
-                                    class="inline">
+                                <form
+                                    action="{{ route('tasks.destroy', ['course_id' => $module->course_id, 'module_id' => $module->id, 'id' => $task->id]) }}"
+                                    method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"

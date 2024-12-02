@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "codedge/laravel-fpdf": "^1.12",
+        "diglactic/laravel-breadcrumbs": "*",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
     },

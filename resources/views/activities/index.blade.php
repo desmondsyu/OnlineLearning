@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('courses.activity', $course->id, $student->id) }}
     <div class="mb-6">
         <h1 class="text-3xl font-bold mb-4">Activity for "{{ $course->title }}"</h1>
         <h2 class="text-xl">Student: {{ $student->name }} ({{ $student->email }})</h2>
@@ -34,8 +35,8 @@
                                     $answer = $task->answers->last();
                                 @endphp
                                 @if ($answer)
-                                    <a href="{{ route('answers.edit', [$task->id, $answer->id]) }}"
-                                        class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-700">
+                                    <a href="{{ route('answers.edit', ['course_id' => $course->id, 'module_id' => $module->id, 'task_id' => $task->id, 'id' => $answer->id]) }}"
+                                        class=" text-green-500 px-4 py-1 rounded underline">
                                         View Submission
                                     </a>
                                 @else

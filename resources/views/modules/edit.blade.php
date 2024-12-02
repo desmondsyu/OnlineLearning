@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('modules.edit', $course_id, $module->id) }}
     <h1 class="text-3xl font-bold mb-4">Edit Module Information</h1>
 
     @if ($errors->any())

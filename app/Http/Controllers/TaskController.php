@@ -23,19 +23,19 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
-    public function getByModule($module_id)
+    public function getByModule($course_id, $module_id)
     {
         $tasks = $this->service->getTaskByModule($module_id);
         $module = $this->moduleService->getModuleById($module_id);
         return view('tasks.index', compact('tasks', 'module'));
     }
 
-    public function create($module_id)
+    public function create($course_id, $module_id)
     {
-        return view('tasks.create', compact('module_id'));
+        return view('tasks.create', compact('module_id', 'course_id'));
     }
 
-    public function store(Request $request, $module_id)
+    public function store(Request $request, $course_id, $module_id)
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
@@ -47,16 +47,16 @@ class TaskController extends Controller
 
         $this->service->createTask($data);
 
-        return redirect()->route('tasks.index', $module_id)->with('success', 'New task created.');
+        return redirect()->route('tasks.index', ['module_id' => $module_id, 'course_id' => $course_id])->with('success', 'New task created.');
     }
 
-    public function edit($id, $module_id)
+    public function edit($course_id, $module_id, $id)
     {
         $task = $this->service->getTaskById($id);
-        return view('tasks.edit', compact('task', 'module_id'));
+        return view('tasks.edit', compact('task', 'module_id', 'course_id'));
     }
 
-    public function update(Request $request, $id, $module_id)
+    public function update(Request $request, $course_id, $module_id, $id)
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
@@ -64,12 +64,12 @@ class TaskController extends Controller
             'total_grade' => 'required|numeric|min:0',
         ]);
         $this->service->updateTask($id, $data);
-        return redirect()->route('tasks.index', $module_id)->with('success', 'Task information updated.');
+        return redirect()->route('tasks.index', ['module_id' => $module_id, 'course_id' => $course_id])->with('success', 'Task information updated.');
     }
 
-    public function destroy($id, $module_id)
+    public function destroy($course_id, $module_id, $id)
     {
         $this->service->deleteTask($id);
-        return redirect()->route('tasks.index', $module_id)->with('success', 'Task deleted!');
+        return redirect()->route('tasks.index', ['module_id' => $module_id, 'course_id' => $course_id])->with('success', 'Task deleted!');
     }
 }

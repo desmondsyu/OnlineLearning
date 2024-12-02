@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('modules.create', $course_id) }}
     <h1 class="text-3xl font-bold mb-4">Add New Module</h1>
 
     @if ($errors->any())

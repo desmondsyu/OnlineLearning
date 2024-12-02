@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('modules.index', $course->id) }}
     <div class="mb-6 border-b-4 border-gray-500 flex-row flex justify-between">
         <div>
             <h1 class="text-3xl font-bold mb-4">{{ $course->title }}</h1>
@@ -42,7 +43,7 @@
                             <p class="text-gray-700 text-base">{{ $module->description }}</p>
                         </div>
                         <div class="px-6 py-2 bg-gray-100 flex justify-end items-center gap-x-3">
-                            <a href="{{ route('tasks.index', $module->id) }}"
+                            <a href="{{ route('tasks.index', ['module_id' => $module->id, 'course_id' => $course->id]) }}"
                                 class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">View</a>
 
                             @if (auth()->user()->role === 'tutor')

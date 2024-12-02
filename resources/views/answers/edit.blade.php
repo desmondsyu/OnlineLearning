@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('answers.edit', $answer->id, $task_id, $module_id, $course_id) }}
     <h1 class="text-3xl font-bold mb-4">View Answer</h1>
 
     @if ($errors->any())
@@ -15,7 +16,9 @@
         </div>
     @endif
 
-    <form action="{{ route('answers.update', [$answer->id, $task_id]) }}" method="POST" class="w-full max-w-lg">
+    <form
+        action="{{ route('answers.update', ['course_id' => $course_id, 'module_id' => $module_id, 'task_id' => $task_id, 'id' => $answer->id]) }}"
+        method="POST" class="w-full max-w-lg">
         @csrf
         <div>
             <label for="mark" class="block text-gray-700 text-sm font-bold mb-2">Grade:</label>

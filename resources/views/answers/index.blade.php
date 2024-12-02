@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('answers.index', $task->id, $task->module_id, $course_id) }}
     <div class="mb-6 border-b-4 border-gray-500">
         <h1 class="text-3xl font-bold mb-4">{{ $task->title }}</h1>
     </div>
@@ -22,11 +23,11 @@
                         </div>
                         <div class="px-6 py-1 bg-gray-100 flex justify-end items-center gap-x-3">
                             @if (auth()->user()->role === 'tutor')
-                                <a href="{{ route('answers.edit', [$answer->id, $task->id]) }}"
+                                <a href="{{ route('answers.edit', ['course_id' => $course_id, 'module_id' => $task->module_id, 'task_id' => $task->id, 'id' => $answer->id]) }}"
                                     class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-700">Grade</a>
                             @endif
                             @if (auth()->user()->role === 'student')
-                                <a href="{{ route('answers.edit', [$answer->id, $task->id]) }}"
+                                <a href="{{ route('answers.edit', ['course_id' => $course_id, 'module_id' => $task->module_id, 'task_id' => $task->id, 'id' => $answer->id]) }}"
                                     class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-700">View</a>
                             @endif
                         </div>

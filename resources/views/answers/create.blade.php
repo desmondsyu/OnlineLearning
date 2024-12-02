@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('answers.create', $task_id, $module_id, $course_id) }}
     <h1 class="text-3xl font-bold mb-4">Attempt</h1>
 
     @if ($errors->any())
@@ -15,7 +16,7 @@
         </div>
     @endif
 
-    <form action="{{ route('answers.store', $task_id) }}" method="POST" class="w-full max-w-lg">
+    <form action="{{ route('answers.store', ['course_id' => $course_id, 'module_id' => $module_id, 'task_id' => $task_id]) }}" method="POST" class="w-full max-w-lg">
         @csrf
 
         <div class="mb-4">

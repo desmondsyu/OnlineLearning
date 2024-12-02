@@ -56,18 +56,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/courses/{course_id}/modules/{id}/update', [ModuleController::class, 'update'])->name('modules.update');
     Route::delete('/courses/{course_id}/modules/{id}/delete', [ModuleController::class, 'destroy'])->name('modules.destroy');
 
-    Route::get('/modules/{module_id}/tasks/index', [TaskController::class, 'getByModule'])->name('tasks.index');
-    Route::get('/modules/{module_id}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
-    Route::post('/modules/{module_id}/tasks/store', [TaskController::class, 'store'])->name('tasks.store');
-    Route::get('/modules/{module_id}/tasks/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
-    Route::post('/modules/{module_id}/tasks/{id}/update', [TaskController::class, 'update'])->name('tasks.update');
-    Route::delete('/modules/{module_id}/tasks/{id}/delete', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::get('/courses/{course_id}/modules/{module_id}/tasks/index', [TaskController::class, 'getByModule'])->name('tasks.index');
+    Route::get('/courses/{course_id}/modules/{module_id}/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+    Route::post('/courses/{course_id}/modules/{module_id}/tasks/store', [TaskController::class, 'store'])->name('tasks.store');
+    Route::get('/courses/{course_id}/modules/{module_id}/tasks/{id}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+    Route::post('/courses/{course_id}/modules/{module_id}/tasks/{id}/update', [TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/courses/{course_id}/modules/{module_id}/tasks/{id}/delete', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
-    Route::get('/tasks/{task_id}/answer/index', [AnswerController::class, 'getByTask'])->name('answers.index');
-    Route::get('/tasks/{task_id}/answer/create', [AnswerController::class, 'create'])->name('answers.create');
-    Route::post('/tasks/{task_id}/answer/store', [AnswerController::class, 'store'])->name('answers.store');
-    Route::get('/tasks/{task_id}/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answers.edit');
-    Route::post('/tasks/{task_id}/answer/{id}/update', [AnswerController::class, 'update'])->name('answers.update');
+    Route::get('/courses/{course_id}/modules/{module_id}/tasks/{task_id}/answer/index', [AnswerController::class, 'getByTask'])->name('answers.index');
+    Route::get('/courses/{course_id}/modules/{module_id}/tasks/{task_id}/answer/create', [AnswerController::class, 'create'])->name('answers.create');
+    Route::post('/courses/{course_id}/modules/{module_id}/tasks/{task_id}/answer/store', [AnswerController::class, 'store'])->name('answers.store');
+    Route::get('/courses/{course_id}/modules/{module_id}/tasks/{task_id}/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answers.edit');
+    Route::post('/courses/{course_id}/modules/{module_id}/tasks/{task_id}/answer/{id}/update', [AnswerController::class, 'update'])->name('answers.update');
 
     Route::get('/courses/certification/{id}', [CertificateController::class, 'exportPdf'])->name('courses.certification');
 

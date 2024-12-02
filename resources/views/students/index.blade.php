@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    {{ Breadcrumbs::render('courses.students', $course->id) }}
     <div class="mb-6">
         <h1 class="text-3xl font-bold mb-4">Manage Students for "{{ $course->title }}"</h1>
     </div>
