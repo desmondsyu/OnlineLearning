@@ -7,11 +7,6 @@
         </div>
     @endif
 
-    <form method="GET" action="{{ route('courses.filter') }}" class="mb-6">
-        <input type="text" name="query" placeholder="Search courses..." class="border rounded px-4 py-2 w-full sm:w-1/2" value="{{ request('query') }}" />
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
-    </form>
-
     <ul class="space-y-4">
         @if (auth()->user()->role === 'tutor')
             <li>
@@ -19,6 +14,11 @@
                     <a href="{{ route('courses.create') }}" class="font-bold text-xl mx-auto my-4">Create Course</a>
                 </div>
             </li>
+        @else
+            <form method="GET" action="{{ route('courses.filter') }}" class="mb-6">
+                <input type="text" name="query" placeholder="Search courses..." class="border rounded px-4 py-2 w-full sm:w-1/2" value="{{ request('query') }}" />
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
+            </form>
         @endif
 
         @if (count($courses) > 0)
