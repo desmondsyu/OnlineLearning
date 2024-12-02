@@ -1,0 +1,9 @@
+[submodule "vendor/codedge/laravel-fpdf"]
+	path = vendor/codedge/laravel-fpdf
+	url = https://github.com/codedge/laravel-fpdf.git
+[submodule "vendor/diglactic/laravel-breadcrumbs"]
+	path = vendor/diglactic/laravel-breadcrumbs
+	url = https://github.com/diglactic/laravel-breadcrumbs.git
+[submodule "vendor/facade/ignition-contracts"]
+	path = vendor/facade/ignition-contracts
+	url = https://github.com/facade/ignition-contracts.git
