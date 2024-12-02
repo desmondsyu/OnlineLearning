@@ -6,7 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "codedge/laravel-fpdf": "^1.12",
+        "codedge/laravel-fpdf": "*",
         "diglactic/laravel-breadcrumbs": "*",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
