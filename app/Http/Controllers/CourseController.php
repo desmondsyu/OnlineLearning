@@ -18,14 +18,16 @@ class CourseController extends Controller
     public function index()
     {
         $courses = $this->service->getAllCourses();
-        return view('courses.index', compact('courses'));
+        $type = 'explore';
+        return view('courses.index', compact('courses','type'));
     }
 
     public function searchFromAll(Request $request)
     {
         $query = $request->input('query', '');
         $courses = $this->service->searchCoursesByNameFromAll($query);
-        return view('courses.index', compact('courses'));
+        $type = 'explore';
+        return view('courses.index', compact('courses', 'type'));
     }
 
     public function searchFromTutor(Request $request)
@@ -38,7 +40,8 @@ class CourseController extends Controller
     public function myCourses()
     {
         $courses = Auth::user()->courses;
-        return view('courses.index', compact('courses'));
+        $type = 'myCourses';
+        return view('courses.index', compact('courses', 'type'));
     }
 
     public function create()
@@ -124,7 +127,8 @@ class CourseController extends Controller
     {
         $query = $request->input('query', '');
         $courses = $this->service->searchCoursesByNameFromAll($query);
-        return view('courses.index', compact('courses'));
+        $type = 'explore';
+        return view('courses.index', compact('courses', 'type'));
     }
 
     public function searchById($id){
