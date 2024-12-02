@@ -136,6 +136,76 @@
             "install-path": "../carbonphp/carbon-doctrine-types"
         },
         {
+            "name": "codedge/laravel-fpdf",
+            "version": "1.12.1",
+            "version_normalized": "1.12.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codedge/laravel-fpdf.git",
+                "reference": "9319768852f483ec5a3b00ca19b2157349c88fb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codedge/laravel-fpdf/zipball/9319768852f483ec5a3b00ca19b2157349c88fb9",
+                "reference": "9319768852f483ec5a3b00ca19b2157349c88fb9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^9.0 || ^10.0 || ^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.39",
+                "orchestra/testbench": "^7.35.0 || ^8.0 || ^9.0",
+                "phpunit/phpunit": "^9.6.0 || ^10.5"
+            },
+            "time": "2024-03-19T13:25:39+00:00",
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Fpdf": "Codedge\\Fpdf\\Facades\\Fpdf"
+                    },
+                    "providers": [
+                        "Codedge\\Fpdf\\FpdfServiceProvider"
+                    ]
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Codedge\\Fpdf\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Holger Lösken",
+                    "email": "holger.loesken@codedge.de"
+                }
+            ],
+            "description": "Laravel package to include Fpdf. It ships with Fpdf 1.86.",
+            "keywords": [
+                "fpdf",
+                "laravel",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/codedge/laravel-fpdf/issues",
+                "source": "https://github.com/codedge/laravel-fpdf"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/codedge",
+                    "type": "github"
+                }
+            ],
+            "install-path": "../codedge/laravel-fpdf"
+        },
+        {
             "name": "dflydev/dot-access-data",
             "version": "v3.0.3",
             "version_normalized": "3.0.3.0",

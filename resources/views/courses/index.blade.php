@@ -16,13 +16,13 @@
             </li>
         @else
             <form method="GET" action="{{ route('courses.filter') }}" class="mb-6">
-                <input type="text" name="query" placeholder="Search courses..." class="border rounded px-4 py-2 w-full sm:w-1/2" value="{{ request('query') }}" />
+                <input type="text" name="query" placeholder="Search courses..."
+                    class="border rounded px-4 py-2 w-full sm:w-1/2" value="{{ request('query') }}" />
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Search</button>
             </form>
         @endif
 
         @if (count($courses) > 0)
-            
             @foreach ($courses as $course)
                 <li>
                     <div class="bg-white rounded-lg overflow-hidden border-2 border-l-8 border-gray-300">
@@ -33,13 +33,24 @@
                                 <p class="text-gray-700 text-base"><strong>Tutor:</strong> {{ $course->tutor->name }}</p>
                             </div>
 
-                            @if (auth()->user()->role === 'student' && Auth::user()->courses->contains($course->id))
-                                <p class="text-gray-700 text-base content-center font-bold">
-                                    <span class="capitalize">
-                                        {{ Auth::user()->courses->find($course->id)->pivot->status }}
-                                    </span>
-                                </p>
-                            @endif
+                            <div class="content-center">
+                                @if (auth()->user()->role === 'student' && Auth::user()->courses->contains($course->id))
+                                    <p class="text-gray-700 text-base content-center font-bold">
+                                        <span class="capitalize">
+                                            {{ Auth::user()->courses->find($course->id)->pivot->status }}
+                                        </span>
+                                    </p>
+                                    @if (Auth::user()->courses->find($course->id)->pivot->status === 'Completed')
+                                        <p class=" text-base content-center font-bold underline text-green-500">
+                                            <span class="capitalize">
+                                                <a href="{{route('courses.certification', $course->id)}}">
+                                                    Certification
+                                                </a>
+                                            </span>
+                                        </p>
+                                    @endif
+                                @endif
+                            </div>
                         </div>
 
                         <div class="px-6 py-2 bg-gray-100 flex justify-end items-center gap-x-3">

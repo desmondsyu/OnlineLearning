@@ -4,6 +4,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\CertificateController;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -68,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tasks/{task_id}/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answers.edit');
     Route::post('/tasks/{task_id}/answer/{id}/update', [AnswerController::class, 'update'])->name('answers.update');
 
-
+    Route::get('/courses/certification/{id}', [CertificateController::class, 'exportPdf'])->name('courses.certification');
 
 });
 

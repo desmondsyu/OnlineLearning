@@ -127,4 +127,9 @@ class CourseController extends Controller
         return view('courses.index', compact('courses'));
     }
 
+    public function searchById($id){
+        $course = $this->service->getCourseById($id);
+        return $course;
+    }
+
 }
