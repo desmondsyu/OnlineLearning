@@ -60,7 +60,7 @@ Breadcrumbs::for('tasks.index', function (BreadcrumbTrail $trail, $moduleId, $co
 });
 
 // Tasks Create
-Breadcrumbs::for('tasks.create', function (BreadcrumbTrail $trail, $courseId, $moduleId) {
+Breadcrumbs::for('tasks.create', function (BreadcrumbTrail $trail, $moduleId, $courseId) {
     $trail->parent('tasks.index', $moduleId, $courseId);
     $trail->push('Create Task', route('tasks.create', ['course_id' => $courseId, 'module_id' => $moduleId]));
 });
